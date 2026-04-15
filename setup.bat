@@ -19,6 +19,13 @@ REM Pre-download the embedding model
 echo Pre-downloading embedding model...
 python -c "from sentence_transformers import SentenceTransformer; SentenceTransformer('all-MiniLM-L6-v2')"
 
+echo.
+echo NOTE: For image OCR support, Tesseract must be installed separately.
+echo   Download: https://github.com/UB-Mannheim/tesseract/wiki
+echo   After install, add Tesseract to your PATH or set in .env:
+echo   TESSERACT_CMD=C:\Program Files\Tesseract-OCR\tesseract.exe
+echo   (OCR is optional — PPT and other file types work without it)
+
 REM Create folder structure
 if not exist data\applications mkdir data\applications
 if not exist vectorstore mkdir vectorstore

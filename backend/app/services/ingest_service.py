@@ -27,14 +27,19 @@ class IngestService:
         logger.info(f"[INGEST] Source path: {app_path}")
         logger.info(f"{'='*60}")
 
+        # Log all files detected before loading
+        from pathlib import Path as _Path
+        detected = [f.name for f in _Path(app_path).rglob("*") if f.is_file()]
+        logger.info(f"[INGEST] Files detected: {detected}")
+
         # ── Step 1: Load documents ────────────────────────────────────────────
         docs = load_documents(app_path)
         if not docs:
             raise FileNotFoundError(
                 f"No documents found in '{app_path}'. "
-                "Add PDF, DOCX, or XLSX files to the application folder."
+                "Add PDF, DOCX, XLSX, or PPTX files to the application folder."
             )
-        logger.info(f"[INGEST] Total documents loaded: {len(docs)}")
+        logger.info(f"[INGEST] Total documents extracted: {len(docs)}")
 
         # ── Step 2: Chunk ─────────────────────────────────────────────────────
         chunks = chunk_documents(docs)
